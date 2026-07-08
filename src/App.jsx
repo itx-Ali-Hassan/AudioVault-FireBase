@@ -1,10 +1,8 @@
-import Loading from "./components/Loading/Index"
-import PageNotFound from "./components/PageNotFound/Index"
+import AppRoutes from "./pages/Routes"
 
 const App = () => {
   return (
-    // <PageNotFound />
-    <Loading/>
+    <AppRoutes />
   )
 }
 
