@@ -8,11 +8,7 @@ import PrivateRoutes from "@/config/PrivateRoutes"
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/*" element={
-        <PrivateRoutes>
-          <FrontendRoutes />
-        </PrivateRoutes>
-      } />
+      <Route path="/*" element={<PrivateRoutes><FrontendRoutes /></PrivateRoutes>} />
       <Route path="/auth/*" element={<AuthRoutes />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>

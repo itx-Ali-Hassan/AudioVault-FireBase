@@ -1,4 +1,3 @@
-// src/context/AuthContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 import Loading from '@/components/Loading/Index';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -10,16 +9,18 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [loading, setLoading] = useState(false);
 
-    // useEffect(() => {
-    //     setLoading(true);
-    //     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //         console.log('currentUser', currentUser)
-    //         setUser(currentUser);
-    //     });
-    //     setLoading(false);
+    useEffect(() => {
+        setLoading(true);
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            console.log('currentUser', currentUser)
+            setUser(currentUser);
+        });
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000);
 
-    //     return () => unsubscribe(); // Cleanup function
-    // }, []);
+        return () => unsubscribe(); // Cleanup function
+    }, []);
 
 
     return (
