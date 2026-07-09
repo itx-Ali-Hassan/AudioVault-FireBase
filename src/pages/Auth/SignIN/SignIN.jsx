@@ -1,6 +1,11 @@
+import { useAuth } from "@/context/AuthProvider";
+
 const SignIN = () => {
+
+  const { user, loading, setLoading } = useAuth();
+
   return (
-    <div>SignIN</div>
+    <button>SignIN</button>
   )
 }
 

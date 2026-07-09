@@ -7,8 +7,8 @@ import PageNotFound from "@/components/PageNotFound/Index"
 const AuthRoutes = () => {
   return (
     <Routes>
-      <Route path="/signin" element={<SignIN />} />
-      <Route path="/signup" element={<SignUP />} />
+      <Route path="/sign-in" element={<SignIN />} />
+      <Route path="/sign-up" element={<SignUP />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   )

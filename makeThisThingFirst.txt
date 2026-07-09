@@ -1,0 +1,8 @@
+1. privateRoutes.jsx ( is ma routes ko manage kia jai ga ka user allow ha ya nai )
+	is file ko is tera code karna ha ka reuse ho saka 
+2. user ka data setUser() ma save kar na ha 
+3. SignUP & SignIn pages ma logic add karna 
+4. logOut ka function create kar na ha 
+5. account delete ka code add karna ha 
+6. audio file ko store karna ka lia FireStore ka use kar na ha 
+7. Finally creat the UI of the WebSite 

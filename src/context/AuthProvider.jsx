@@ -1,23 +1,30 @@
 // src/context/AuthContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 import Loading from '@/components/Loading/Index';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/config/FireBase';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState();
+    const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        setLoading(true)
-        setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true);
+    //     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    //         console.log('currentUser', currentUser)
+    //         setUser(currentUser);
+    //     });
+    //     setLoading(false);
+
+    //     return () => unsubscribe(); // Cleanup function
+    // }, []);
+
 
     return (
         <AuthContext.Provider value={{ user, loading, setUser, setLoading }}>
-            {loading ? <Loading title="Please Wait" body="Website data is loading" /> : children}
+            {loading ? <Loading title="Please W ait" body="Website data is loading" /> : children}
         </AuthContext.Provider>
     );
 };
