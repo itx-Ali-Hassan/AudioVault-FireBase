@@ -6,7 +6,7 @@ import { auth } from '@/config/FireBase';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user, loading, setUser, setLoading }}>
-            {loading ? <Loading title="Please W ait" body="Website data is loading" /> : children}
+            {loading ? <Loading title="Please Wait" body="Website data is loading" /> : children}
         </AuthContext.Provider>
     );
 };

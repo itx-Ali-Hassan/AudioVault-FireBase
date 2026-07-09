@@ -1,12 +1,13 @@
+import Loading from "@/components/Loading/Index";
 import { useAuth } from "@/context/AuthProvider"
-import { replace, useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 const PrivateRoutes = ({ children }) => {
-  const { user } = useAuth()
-  const navigate = useNavigate()
-  if (user === null) {
-    return navigate("/auth/sign-in", { replace: true })
-  }
+  const { user, loading } = useAuth()
+
+  if (loading) return <Loading title="Please Wait" body="Checking authentication..." />;
+
+  if (!user) return <Navigate to="/auth/sign-in" replace />;
 
   return (children)
 }
