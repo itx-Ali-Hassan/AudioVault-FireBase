@@ -1,7 +1,11 @@
-import { toast } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const MyToastify = (text, type) => {
-    toast[type](text, {
+const MyToastify = ({ messageText, messageType, type }) => {
+    const resolvedType = messageType || type || "success";
+    const toastMethod = toast[resolvedType] || toast.success;
+
+    toastMethod(messageText, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -12,6 +16,6 @@ const MyToastify = (text, type) => {
         theme: "dark",
         transition: Bounce,
     });
-}
+};
 
 export default MyToastify;

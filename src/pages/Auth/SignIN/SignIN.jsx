@@ -19,19 +19,19 @@ const SignIN = () => {
     const password = values.password
     const emailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|proton\.me|protonmail\.com)$/;
     const validEmail = emailRegex.test(email);
-    MyToastify(text = 'Email is not valid','warn')
+
     if (validEmail) handelSingIn(email, password)
-    if (!validEmail) console.log('Wrong Email')
+    if (!validEmail) MyToastify({ messageText: 'Email is not valid', messageType: 'warn' })
   }
 
   const handelSingIn = async (email, password) => {
     setLoading(true)
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      MyToastify(text = 'SignIn successFully', type = 'success')
+      MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
       navigate('/')
     } catch (error) {
-      MyToastify(text = 'there is an error','error')
+      MyToastify({ messageText: 'there is an error', messageType: 'error' })
     } finally {
       setLoading(false)
     }
@@ -45,10 +45,10 @@ const SignIN = () => {
       const result = await signInWithPopup(auth, provider)
       const userData = result.user
       setUser(userData)
-      MyToastify(text = 'SignIn successFully','success')
+      MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
       navigate('/')
     } catch (error) {
-      MyToastify(text = 'there is an error','error')
+      MyToastify({ messageText: 'there is an error', messageType: 'error' })
     } finally {
       setLoading(false)
     }
