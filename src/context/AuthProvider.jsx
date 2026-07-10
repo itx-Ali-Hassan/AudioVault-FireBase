@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import Loading from '@/components/Loading/Index';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/config/FireBase';
+import MyToastify from '@/config/MyToastify';
 
 const AuthContext = createContext(null);
 
@@ -15,16 +16,13 @@ export const AuthProvider = ({ children }) => {
             console.log('currentUser', currentUser)
             setUser(currentUser);
         });
-        setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-
+        setLoading(false);
         return () => unsubscribe(); // Cleanup function
     }, []);
 
 
     return (
-        <AuthContext.Provider value={{ user, loading, setUser, setLoading }}>
+        <AuthContext.Provider value={{ user, loading, setUser, setLoading, MyToastify, auth }}>
             {loading ? <Loading title="Please Wait" body="Website data is loading" /> : children}
         </AuthContext.Provider>
     );
