@@ -5,7 +5,7 @@ import PageNotFound from "@/components/PageNotFound/Index"
 const FrontendRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<DashBoard />} />
+      <Route path="/*" element={<DashBoard />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
