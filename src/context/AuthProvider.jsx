@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
         try {
             await signOut(auth);
             MyToastify("Logged out successfully!", "success");
-            navigate("/auth/sign-in");
         } catch (error) {
             console.error("Logout Error:", error);
             MyToastify("Failed to log out!", "error");

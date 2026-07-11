@@ -49,6 +49,7 @@ const SignIN = () => {
       navigate('/')
     } catch (error) {
       MyToastify({ messageText: 'there is an error', messageType: 'error' })
+      console.log('error', error)
     } finally {
       setLoading(false)
     }

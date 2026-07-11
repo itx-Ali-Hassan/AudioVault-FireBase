@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom"
 
 import AuthRoutes from "./Auth/Routes"
 import PageNotFound from "@/components/PageNotFound/Index"
-import FrontendRoutes from "./Frontend/Routes"
 import PrivateRoutes from "@/config/PrivateRoutes"
+import FrontendRoutes from "./Frontend/Routes"
 
 const AppRoutes = () => {
   return (

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { GoogleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, Typography } from 'antd';
 
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { useAuth } from '@/context/AuthProvider';
 
@@ -23,17 +23,17 @@ const SignIN = () => {
       MyToastify({ messageText: 'Email is not valid', messageType: 'warn' })
       return
     }
-    handelSingUp({email, password})
+    handelSingUp({ email, password })
   }
 
-  const handelSingUp = async ({email, password}) => {
+  const handelSingUp = async ({ email, password }) => {
     setLoading(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       setUser(user)
       MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
-      navigate('/auth/sign-in`')
+      navigate('/auth/sign-in')
     } catch (error) {
       MyToastify({ messageText: 'there is an error', messageType: 'error' })
       console.log('error', error)
@@ -45,7 +45,6 @@ const SignIN = () => {
   const singInGoogle = async () => {
     setLoading(true)
     const provider = new GoogleAuthProvider()
-
     try {
       const result = await signInWithPopup(auth, provider)
       const userData = result.user
@@ -53,7 +52,8 @@ const SignIN = () => {
       MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
       navigate('/')
     } catch (error) {
-      MyToastify({ messageText: 'there is an error', messageType: 'error' })
+      MyToastify({ messageText: error, messageType: 'error' })
+      console.log('error', error)
     } finally {
       setLoading(false)
     }
@@ -131,8 +131,8 @@ const SignIN = () => {
           </Form.Item>
           <Divider size='large' className='border-myPink!'>continua with</Divider>
           <Form.Item>
-            <Button block className='bg-myPink! text-myWhite!'>
-              <GoogleOutlined onClick={singInGoogle} />
+            <Button block className='bg-myPink! text-myWhite!' onClick={singInGoogle}>
+              <GoogleOutlined />
             </Button>
           </Form.Item>
         </Form>
