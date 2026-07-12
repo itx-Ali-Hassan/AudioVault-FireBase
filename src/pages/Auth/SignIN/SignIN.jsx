@@ -1,15 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { GoogleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, Typography } from 'antd';
 
-import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { GoogleAuthProvider } from 'firebase/auth/web-extension';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 import { useAuth } from '@/context/AuthProvider';
 
+import { Google, Lock, Person } from '@mui/icons-material';
+
 const SignIN = () => {
-  const { setUser, setLoading, auth, MyToastify } = useAuth()
+  const { setUser, setLoading, auth, MyToastify, user } = useAuth()
   const navigate = useNavigate()
 
   const getValues = values => checkEmail(values)
@@ -28,10 +28,10 @@ const SignIN = () => {
     setLoading(true)
     try {
       await signInWithEmailAndPassword(auth, email, password)
-      MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
+      MyToastify({ messageText: `SignIn successFully ${user.displayName}`, messageType: 'success' })
       navigate('/')
     } catch (error) {
-      MyToastify({ messageText: 'there is an error', messageType: 'error' })
+      MyToastify({ messageText: `${error}`, messageType: 'error' })
     } finally {
       setLoading(false)
     }
@@ -40,7 +40,6 @@ const SignIN = () => {
   const singInGoogle = async () => {
     setLoading(true)
     const provider = new GoogleAuthProvider()
-
     try {
       const result = await signInWithPopup(auth, provider)
       const userData = result.user
@@ -48,7 +47,7 @@ const SignIN = () => {
       MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
       navigate('/')
     } catch (error) {
-      MyToastify({ messageText: 'there is an error', messageType: 'error' })
+      MyToastify({ messageText: `${error}`, messageType: 'error' })
       console.log('error', error)
     } finally {
       setLoading(false)
@@ -72,14 +71,14 @@ const SignIN = () => {
             name="email"
             rules={[{ required: true, message: "Please Enter you'r Email!" }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Email" />
+            <Input prefix={<Person />} placeholder="Email" />
           </Form.Item>
           <Form.Item>
             <Form.Item
               name="password"
               rules={[{ required: true, message: "Please Enter you'r Password!" }]}
             >
-              <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+              <Input prefix={<Lock />} type="password" placeholder="Password" />
             </Form.Item>
             <Link to='/auth/ForGotPassword' className='text-myPink!'>for got password</Link>
           </Form.Item>
@@ -92,8 +91,8 @@ const SignIN = () => {
           </Form.Item>
           <Divider variant='' size='large' className='border-myPink!'>continua with</Divider>
           <Form.Item>
-            <Button block className='bg-myPink! text-myWhite!'>
-              <GoogleOutlined onClick={singInGoogle} />
+            <Button block className='bg-myPink! text-myWhite!' onClick={singInGoogle} >
+              <Google />
             </Button>
           </Form.Item>
         </Form>

@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { GoogleOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, Typography } from 'antd';
 
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 import { useAuth } from '@/context/AuthProvider';
+
+import { Google, Lock, Person } from '@mui/icons-material';
 
 const SignIN = () => {
   const { setUser, setLoading, auth, MyToastify } = useAuth()
@@ -35,7 +36,7 @@ const SignIN = () => {
       MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
       navigate('/auth/sign-in')
     } catch (error) {
-      MyToastify({ messageText: 'there is an error', messageType: 'error' })
+      MyToastify({ messageText: `${error}`, messageType: 'error' })
       console.log('error', error)
     } finally {
       setLoading(false)
@@ -52,7 +53,7 @@ const SignIN = () => {
       MyToastify({ messageText: 'SignIn successFully', messageType: 'success' })
       navigate('/')
     } catch (error) {
-      MyToastify({ messageText: error, messageType: 'error' })
+      MyToastify({ messageText: `${error}`, messageType: 'error' })
       console.log('error', error)
     } finally {
       setLoading(false)
@@ -85,7 +86,7 @@ const SignIN = () => {
               },
             ]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Email" />
+            <Input prefix={<Person />} placeholder="Email" />
           </Form.Item>
 
           <Form.Item
@@ -98,7 +99,7 @@ const SignIN = () => {
             ]}
             hasFeedback
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+            <Input.Password prefix={<Lock />} placeholder="Password" />
           </Form.Item>
 
           <Form.Item
@@ -120,7 +121,7 @@ const SignIN = () => {
               }),
             ]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder='Confirm Password' />
+            <Input.Password prefix={<Lock />} placeholder='Confirm Password' />
           </Form.Item>
 
           <Form.Item>
@@ -132,7 +133,7 @@ const SignIN = () => {
           <Divider size='large' className='border-myPink!'>continua with</Divider>
           <Form.Item>
             <Button block className='bg-myPink! text-myWhite!' onClick={singInGoogle}>
-              <GoogleOutlined />
+              <Google />
             </Button>
           </Form.Item>
         </Form>

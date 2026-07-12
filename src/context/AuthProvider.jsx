@@ -9,6 +9,8 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [loadingTitle, setLoadingTitle] = useState(null)
+    const [loadingBody, setLoadingBody] = useState(null)
 
     useEffect(() => {
         setLoading(true);
@@ -37,8 +39,19 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, loading, setUser, setLoading, MyToastify, auth, handleLogout }}>
-            {loading ? <Loading title="Please Wait" body="Website data is loading" /> : children}
+        <AuthContext.Provider
+            value={{ user, loading, setUser, setLoading, MyToastify, auth, handleLogout, setLoadingTitle, setLoadingBody }}
+        >
+            {
+                loading
+                    ?
+                    <Loading
+                        title={loadingTitle ? loadingTitle : 'Please Wait'}
+                        body={loadingBody ? loadingBody : 'Website data is loading'}
+                    />
+                    :
+                    children
+            }
         </AuthContext.Provider>
     );
 };

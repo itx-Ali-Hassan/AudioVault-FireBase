@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Layout, Menu, theme } from 'antd';
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/context/AuthProvider';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
-import HomeIcon from '@mui/icons-material/Home';
-import FileUploadIcon from '@mui/icons-material/FileUpload'
-import DownloadIcon from '@mui/icons-material/Download';
-import SettingsIcon from '@mui/icons-material/Settings';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import UploadAudio from './Upload/Upload';
+import DownloadAudio from './Download/Download';
+import UserProfile from './User/Profile';
+import UserSetting from './Setting/Setting';
+import { NavItem } from './NavItems.jsx';
+import Home from './Home/Home';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const MyDashBoard = () => {
-
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -30,40 +30,6 @@ const MyDashBoard = () => {
         setSelectedKey(getSelectedKey(location.pathname));
     }, [location.pathname]);
 
-    const items = [
-        {
-            key: '1',
-            label: 'Home',
-            icon: <HomeIcon fontSize='large' />,
-            onClick: () => { navigate('/'); setSelectedKey('1'); }
-        },
-        {
-            key: '2',
-            label: 'Upload',
-            icon: <FileUploadIcon fontSize='large' />,
-            onClick: () => { navigate('/upload'); setSelectedKey('2'); }
-        },
-        {
-            key: '3',
-            label: 'Download',
-            icon: <DownloadIcon fontSize='large' />,
-            onClick: () => { navigate('/download'); setSelectedKey('3'); }
-        },
-        {
-            key: '5',
-            label: 'Profile',
-            // icon: <Avatar src={user.photoURL} referrerPolicy="no-referrer" size={'large'} />,
-            icon: <AccountCircleIcon fontSize='large' />,
-            onClick: () => { navigate('/profile'); setSelectedKey('5'); }
-        },
-        {
-            key: '4',
-            label: 'Setting',
-            icon: <SettingsIcon fontSize='large' />,
-            onClick: () => { navigate('/setting'); setSelectedKey('4'); }
-        },
-    ];
-
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -76,21 +42,21 @@ const MyDashBoard = () => {
                 ${collapsed
                         ? "text-xl w-10 h-10 bg-zinc-800 rounded-lg text-myPink! mx-auto shadow-md"
                         : "text-2xl text-transparent bg-clip-text bg-linear-to-r from-myWhite! via-myPink! to-myPink! px-2 justify-start w-full"}
-`}>
+                `}>
                     {collapsed ? "AV" : "Audio Vault"}
                 </div>
-                <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={items} />
+                <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={NavItem({ setSelectedKey, navigate })} />
             </Sider>
             <Layout>
                 <Header style={{ padding: 0, background: colorBgContainer }} />
                 <Content style={{ margin: '0 16px' }}>
                     <div className='p-5! border!'>
                         <Routes>
-                            <Route path="/" element={"Home" } />
-                            <Route path="/upload" element={"upload" } />
-                            <Route path="/download" element={"Download" } />
-                            <Route path="/profile" element={"Profile" } />
-                            <Route path="/setting" element={"Setting" } />
+                            <Route path="/" element={<Home />} />
+                            <Route path="/upload" element={<UploadAudio />} />
+                            <Route path="/download" element={<DownloadAudio />} />
+                            <Route path="/profile" element={<UserProfile />} />
+                            <Route path="/setting" element={<UserSetting />} />
                         </Routes>
                     </div>
                 </Content>
