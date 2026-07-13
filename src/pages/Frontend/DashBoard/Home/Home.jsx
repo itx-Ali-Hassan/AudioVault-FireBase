@@ -1,6 +1,9 @@
+import { useAuth } from "@/context/AuthProvider"
+
 const Home = () => {
+  const { handleLogout } = useAuth()
   return (
-    <button className="cursor-pointer bg-myPink">Logout</button>
+    <button className="cursor-pointer bg-myPink" onClick={handleLogout} >Logout</button>
   )
 }
 

@@ -1,62 +1,71 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import Loading from '@/components/Loading/Index';
+
+import { useNavigate } from 'react-router-dom';
+
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/config/FireBase';
+
 import MyToastify from '@/config/MyToastify';
+import Loading from '@/components/Loading/Index';
+import { createAuthFunctions } from '@/config/AuthFunctions';
+import { createFireStoreFunctions } from '@/config/FireStoreFunctions';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [loadingTitle, setLoadingTitle] = useState(null)
-    const [loadingBody, setLoadingBody] = useState(null)
+    const [loadingTitle, setLoadingTitle] = useState(null);
+    const [loadingBody, setLoadingBody] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setLoading(true);
-
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            console.log('currentUser', currentUser);
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
-
+            console.log(currentUser);
             setLoading(false);
         });
-
-        return () => unsubscribe(); // Cleanup function
+        return () => unsubscribe();
     }, []);
 
-    const handleLogout = async () => {
-        setLoading(true)
-        try {
-            await signOut(auth);
-            MyToastify("Logged out successfully!", "success");
-        } catch (error) {
-            console.error("Logout Error:", error);
-            MyToastify("Failed to log out!", "error");
-        } finally {
-            setLoading(false)
-        }
-    }
+
+    const { checkEmail, signInGoogle, handleLogout } = createAuthFunctions({ auth, MyToastify, setLoading, setUser, navigate, });
+    const { uploadAudioFile, getUserData, getAudioData, uploadUserData } = createFireStoreFunctions({ setLoading, user, MyToastify, setLoadingTitle, setLoadingBody })
 
     return (
         <AuthContext.Provider
-            value={{ user, loading, setUser, setLoading, MyToastify, auth, handleLogout, setLoadingTitle, setLoadingBody }}
+            value={{
+                user,
+                loading,
+                setUser,
+                setLoading,
+                MyToastify,
+                auth,
+                handleLogout,
+                setLoadingTitle,
+                setLoadingBody,
+                navigate,
+                checkEmail,
+                signInGoogle,
+                uploadAudioFile,
+                getUserData,
+                getAudioData,
+                uploadUserData,
+            }}
         >
-            {
-                loading
-                    ?
-                    <Loading
-                        title={loadingTitle ? loadingTitle : 'Please Wait'}
-                        body={loadingBody ? loadingBody : 'Website data is loading'}
-                    />
-                    :
-                    children
-            }
+            {loading ? (
+                <Loading
+                    title={loadingTitle ? loadingTitle : 'Tuning In...'}
+                    body={loadingBody ? loadingBody : 'We Accessing your Audio Vault'}
+                />
+            ) : (
+                children
+            )}
         </AuthContext.Provider>
     );
 };
 
-// Custom hook for easy consumption across components
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context) {

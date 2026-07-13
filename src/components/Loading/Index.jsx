@@ -2,7 +2,6 @@ const Loading = ({ title = 'Tuning In...', body = 'Accessing your Audio Vault' }
   return (
     <div className="min-h-screen bg-[#111111] flex flex-col items-center justify-center text-myWhite px-4 font-sans select-none">
 
-      {/* Container for Animation and Text - Pure Center Aligned */}
       <div className="flex flex-col items-center space-y-10">
 
         {/* Maximum Thickness & Center Aligned Audio Equalizer */}

@@ -1,18 +1,22 @@
-import { useState } from "react"
+import { useAuth } from "@/context/AuthProvider";
+import { useState } from "react";
 
 const UploadAudio = () => {
-    const [fileName, setFileName] = useState(null)
-    const [filePath, setFilePath] = useState(null)
-    const handelChange=(e)=>{
-        setFileName(e.target.files[0].name)
-        setFilePath(e.target.files[0])
-        console.log('fileName', fileName)
-        console.dir('e.target', e.target)
-    }
+
+    const { uploadAudioFile, uploadUserData, getAudioData, getUserData } = useAuth()
+
+    const [file, setFile] = useState(null);
+
 
     return (
-        <input type="file" accept="audio/*" onChange={handelChange} className="cursor-pointer bg-myPink p-5 rounded-3xl text-2xl" placeholder="Upload file" />
-    )
-}
+        <div className="flex gap-3">
+            <button className="p-2 bg-myPink rounded-2xl cursor-pointer" onClick={uploadAudioFile}>uploadAudioFile</button>
+            <button className="p-2 bg-myPink rounded-2xl cursor-pointer" onClick={uploadUserData}>uploadUserData</button>
+            <button className="p-2 bg-myPink rounded-2xl cursor-pointer" onClick={getAudioData}>getAudioData</button>
+            <button className="p-2 bg-myPink rounded-2xl cursor-pointer" onClick={getUserData}>getUserData</button>
+        </div>
+    );
+};
 
-export default UploadAudio
+export default UploadAudio;
+
