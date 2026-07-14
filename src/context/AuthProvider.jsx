@@ -31,7 +31,13 @@ export const AuthProvider = ({ children }) => {
 
 
     const { checkEmail, signInGoogle, handleLogout } = createAuthFunctions({ auth, MyToastify, setLoading, setUser, navigate, });
-    const { uploadAudioFile, getUserData, getAudioData, uploadUserData } = createFireStoreFunctions({ setLoading, user, MyToastify, setLoadingTitle, setLoadingBody })
+    const { uploadAudioFile, getUserData, getAudioData, uploadUserData, updateAudioData } = createFireStoreFunctions({
+        setLoading,
+        user,
+        MyToastify,
+        setLoadingTitle,
+        setLoadingBody
+    })
 
     return (
         <AuthContext.Provider
@@ -52,6 +58,7 @@ export const AuthProvider = ({ children }) => {
                 getUserData,
                 getAudioData,
                 uploadUserData,
+                updateAudioData,
             }}
         >
             {loading ? (

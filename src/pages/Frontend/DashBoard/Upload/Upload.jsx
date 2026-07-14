@@ -3,26 +3,32 @@ import { useState } from "react";
 
 const UploadAudio = () => {
 
-    const { uploadAudioFile, uploadUserData, getAudioData, getUserData } = useAuth()
-    const [file, setFile] = useState(null);
+    const { uploadAudioFile, uploadUserData, getAudioData, getUserData, updateAudioData } = useAuth()
+    const [audioFile, setAudioFile] = useState(null);
     const [fileTitle, setFileTitle] = useState(null);
-    const handelChange = (e) => {
-        setFile(e.target.files[0])
+    const [cover, setCover] = useState(null);
+    const handelAudioFile = (e) => {
+        setAudioFile(e.target.files[0])
         console.log('e.target.files', e.target.files)
     }
-    const handelUpload = () => uploadAudioFile({ file, fileTitle })
+    const handelAudioCover = (e) => {
+        setCover(e.target.files[0])
+        console.log('e.target.files', e.target.files)
+    }
+    const handelUpload = () => uploadAudioFile({ audioFile, fileTitle, cover })
 
     return (
         <div className="flex gap-3">
-            <input type="file" accept="audio/*" onChange={handelChange} />
+            <input type="file" accept="audio/*" onChange={handelAudioFile} />
+            <input type="file" accept="image/*" onChange={handelAudioCover} />
             <button
                 className={`p-2 rounded-2xl
-                    ${file
+                    ${audioFile
                         ? "bg-myPink cursor-pointer"
                         : "bg-gray-400 cursor-not-allowed text-white"
                     }`}
                 onClick={handelUpload}
-                disabled={!file}
+                disabled={!audioFile}
             >
                 uploadAudioFile
             </button>
@@ -44,6 +50,13 @@ const UploadAudio = () => {
             >
                 getUserData
             </button>
+            <button
+                className="p-2 bg-myPink rounded-2xl cursor-pointer"
+                onClick={updateAudioData}
+            >
+                updateAudioData
+            </button>
+
 
         </div >
     );
