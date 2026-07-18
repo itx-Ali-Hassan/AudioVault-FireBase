@@ -31,9 +31,10 @@ export const AuthProvider = ({ children }) => {
 
 
     const { checkEmail, signInGoogle, handleLogout } = createAuthFunctions({ auth, MyToastify, setLoading, setUser, navigate, });
-    const { uploadAudioFile, getUserData, getAudioData, uploadUserData, updateAudioData } = createFireStoreFunctions({
+    const { uploadAudioFile, getUserData, getAudio, uploadUserData, updateAudioData, getAllAudios, deleteAudioFile } = createFireStoreFunctions({
         setLoading,
         user,
+        setUser,
         MyToastify,
         setLoadingTitle,
         setLoadingBody
@@ -56,19 +57,23 @@ export const AuthProvider = ({ children }) => {
                 signInGoogle,
                 uploadAudioFile,
                 getUserData,
-                getAudioData,
+                getAudio,
                 uploadUserData,
                 updateAudioData,
+                getAllAudios,
+                deleteAudioFile,
             }}
         >
-            {loading ? (
-                <Loading
-                    title={loadingTitle ? loadingTitle : 'Tuning In...'}
-                    body={loadingBody ? loadingBody : 'We Accessing your Audio Vault'}
-                />
-            ) : (
-                children
-            )}
+            {
+                loading
+                    ? (
+                        <Loading
+                            title={loadingTitle ? loadingTitle : 'Tuning In...'}
+                            body={loadingBody ? loadingBody : 'We fetching your audio vault data from DataBase'}
+                        />
+                    )
+                    : (children)
+            }
         </AuthContext.Provider>
     );
 };

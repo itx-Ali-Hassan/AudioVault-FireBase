@@ -50,7 +50,7 @@ const MyDashBoard = () => {
             <Layout>
                 <Header style={{ padding: 0, background: colorBgContainer }} />
                 <Content style={{ margin: '0 16px' }}>
-                    <div className='p-5! border!'>
+                    <div className='w-full max-h-full! p-5! border!'>
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/upload" element={<UploadAudio />} />
