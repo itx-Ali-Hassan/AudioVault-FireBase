@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, } from 'antd';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import UploadAudio from './Upload/Upload';
-import DownloadAudio from './Download/Download';
+import ViewSongs from './Songs/ViewSongs';
 import UserProfile from './User/Profile';
 import UserSetting from './Setting/Setting';
 import { NavItem } from './NavItems.jsx';
@@ -30,10 +30,7 @@ const MyDashBoard = () => {
         setSelectedKey(getSelectedKey(location.pathname));
     }, [location.pathname]);
 
-    const [collapsed, setCollapsed] = useState(false);
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
+    const [collapsed, setCollapsed] = useState(false)
     const currentYear = new Date().getFullYear();
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -47,20 +44,19 @@ const MyDashBoard = () => {
                 </div>
                 <Menu theme="dark" defaultSelectedKeys={selectedKey} mode="inline" items={NavItem({ setSelectedKey, navigate })} />
             </Sider>
-            <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }} />
-                <Content style={{ margin: '0 16px' }}>
-                    <div className='w-full max-h-full! p-5! border!'>
+            <Layout className='bg-myWhite!'>
+                <Content style={{ margin: '0 16px' }} className='my-3!'>
+                    <div className='w-full h-full!'>
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/upload" element={<UploadAudio />} />
-                            <Route path="/download" element={<DownloadAudio />} />
+                            <Route path="/all-songs" element={<ViewSongs />} />
                             <Route path="/profile" element={<UserProfile />} />
                             <Route path="/setting" element={<UserSetting />} />
                         </Routes>
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>
+                <Footer style={{ textAlign: 'center' }} className='bg-[#222234]! text-myWhite!'>
                     Made by Ali Hassan ©{currentYear}
                 </Footer>
             </Layout>
